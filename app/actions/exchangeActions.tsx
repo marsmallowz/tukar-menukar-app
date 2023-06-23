@@ -50,7 +50,8 @@ export async function getExchanges(): Promise<any> {
     });
 
     if (!decoded?.sub) {
-      throw new Error("Invalid certification");
+      // throw new Error("Invalid certification");
+      return { exchanges: [] };
     }
 
     const exchanges = await prisma.exchange.findMany({

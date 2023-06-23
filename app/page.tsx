@@ -16,29 +16,34 @@ export default async function Home({
   const { users, totalPage }: { users: any; totalPage: number } =
     await getUsers(searchParams);
   const { exchanges }: { exchanges: any } = await getExchanges();
+
   return (
     <main className="p-2">
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-bold">My Exchanges</h1>
-        <SortExchanges />
-      </div>
-      <div className="flex flex-col gap-1 min-h-[calc(100vh/1.5)]">
-        {exchanges.length ? (
-          exchanges.map((exchange: any) => {
-            return (
-              <div
-                key={exchange.id}
-                className="flex justify-between items-center"
-              >
-                <div>{exchange.requestedUserId}</div>
-                <Link href={`/exchanges/${exchange.id}`}>See</Link>
-              </div>
-            );
-          })
-        ) : (
-          <div>User not found</div>
-        )}
-      </div>
+      {exchanges.length ? (
+        <>
+          <div className="flex justify-between">
+            <h1 className="text-2xl font-bold">My Exchanges</h1>
+            <SortExchanges />
+          </div>
+          <div className="flex flex-col gap-1 min-h-[calc(100vh/1.5)]">
+            {exchanges.length ? (
+              exchanges.map((exchange: any) => {
+                return (
+                  <div
+                    key={exchange.id}
+                    className="flex justify-between items-center"
+                  >
+                    <div>{exchange.requestedUserId}</div>
+                    <Link href={`/exchanges/${exchange.id}`}>See</Link>
+                  </div>
+                );
+              })
+            ) : (
+              <div>Exchange not found</div>
+            )}
+          </div>
+        </>
+      ) : null}
       <h1 className="text-2xl font-bold">Find Users</h1>
       <SearchFormUsers />
       <h1 className="text-xl font-semibold mt-2">User List</h1>
