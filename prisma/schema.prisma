@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ExchangeStatus {
+  COMPLETED
+  ONPROGRESS
+  ACCEPTED
+  REJECTED
+  CANCELED
+  PENDING
+}
+
+/// user bikin exchange nunggu persetujuan dari user lain itu progress REQUESTED
+/// seletah user setuju maka progress berubah menjadi ACCEPTED
+/// jika user yang melakukan offer membatalkan progress menjadi CANCELED
+/// jika user yang menerima offer menilak maka akan menjadi CANCLED
+/// jika exchange telah dalam waktu started Date maka status menjadi ONPROGRESS
+/// setelah exchange selesai maka ada progress menjadi COMPLETED
+
+model User {
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  fullname          String?
+  email             String     @unique
+  username          String     @unique
+  role              Role       @default(USER)
+  profile_pic       String?
+  emailVerified     DateTime?
+  hashedPassword    String
+  requestSkillsIDs  String[]   @db.ObjectId
+  offerSkillsIDs    String[]   @db.ObjectId
+  offerSkills       Skill[]    @relation("UserOfferSkills", fields: [offerSkillsIDs], references: [id])
+  requestSkills     Skill[]    @relation("UserRequestSkills", fields: [requestSkillsIDs], references: [id])
+  review            Review[]   @relation("UserReview")
+  reviewed          Review[]   @relation("UserReviewed")
+  exchangeMakers    Exchange[] @relation("UserExchangeMakers")
+  exchangeReceivers Exchange[] @relation("UserExchangeReceivers")
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model Skill {
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  description       String
+  userRequestsIDs   String[]   @db.ObjectId
+  userOffersIDs     String[]   @db.ObjectId
+  userRequests      User[]     @relation("UserRequestSkills", fields: [userRequestsIDs], references: [id])
+  userOffers        User[]     @relation("UserOfferSkills", fields: [userOffersIDs], references: [id])
+  offeredExchange   Exchange[] @relation("SkillOfferedExchange")
+  requestedExchange Exchange[] @relation("SkillRequestedExchange")
+  Review            Review[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model Review {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  rating     Int
+  comment    String?
+  exchangeId String   @db.ObjectId
+  reviewId   String   @db.ObjectId
+  reviewedId String   @db.ObjectId
+  skillId    String   @db.ObjectId
+  review     User     @relation("UserReview", fields: [reviewId], references: [id])
+  reviewed   User     @relation("UserReviewed", fields: [reviewedId], references: [id])
+  skill      Skill    @relation(fields: [skillId], references: [id])
+  exchange   Exchange @relation(fields: [exchangeId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Exchange {
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  reviews          Review[]
+  status           ExchangeStatus @default(PENDING)
+  dateStarted      DateTime
+  dateEnded        DateTime
+  skillOfferedId   String?        @db.ObjectId
+  skillRequestedId String         @db.ObjectId
+  offeredUserId    String         @db.ObjectId
+  requestedUserId  String         @db.ObjectId
+  skillOffered     Skill?         @relation("SkillOfferedExchange", fields: [skillOfferedId], references: [id])
+  skillRequested   Skill          @relation("SkillRequestedExchange", fields: [skillRequestedId], references: [id])
+  offeredUser      User           @relation("UserExchangeMakers", fields: [offeredUserId], references: [id])
+  requestedUser    User           @relation("UserExchangeReceivers", fields: [requestedUserId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
