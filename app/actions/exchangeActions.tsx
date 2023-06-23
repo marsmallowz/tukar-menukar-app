@@ -17,7 +17,9 @@ export async function createExchange({
   dateEnded: string;
 }): Promise<any> {
   try {
-    const sessionToken = cookies().get("next-auth.session-token");
+    const sessionToken = cookies().get(
+      process.env.SESSION_TOKEN_NAME as string
+    );
     const decoded = await decode({
       token: sessionToken?.value,
       secret: process.env.NEXTAUTH_SECRET as string,
@@ -43,7 +45,9 @@ export async function createExchange({
 
 export async function getExchanges(): Promise<any> {
   try {
-    const sessionToken = cookies().get("next-auth.session-token");
+    const sessionToken = cookies().get(
+      process.env.SESSION_TOKEN_NAME as string
+    );
     const decoded = await decode({
       token: sessionToken?.value,
       secret: process.env.NEXTAUTH_SECRET as string,

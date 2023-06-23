@@ -8,7 +8,9 @@ import { Skill } from "@prisma/client";
 
 export async function getAllSkillOffer() {
   try {
-    const sessionToken = cookies().get("next-auth.session-token");
+    const sessionToken = cookies().get(
+      process.env.SESSION_TOKEN_NAME as string
+    );
     const decoded = await decode({
       token: sessionToken?.value,
       secret: process.env.NEXTAUTH_SECRET as string,
@@ -45,7 +47,9 @@ export async function getAllSkillOffer() {
 
 export async function addSkillOffer(id: string) {
   try {
-    const sessionToken = cookies().get("next-auth.session-token");
+    const sessionToken = cookies().get(
+      process.env.SESSION_TOKEN_NAME as string
+    );
     const decoded = await decode({
       token: sessionToken?.value,
       secret: process.env.NEXTAUTH_SECRET as string,
@@ -78,7 +82,9 @@ export async function addSkillOffer(id: string) {
 
 export async function removeSkillOffer(id: string) {
   try {
-    const sessionToken = cookies().get("next-auth.session-token");
+    const sessionToken = cookies().get(
+      process.env.SESSION_TOKEN_NAME as string
+    );
     const decoded = await decode({
       token: sessionToken?.value,
       secret: process.env.NEXTAUTH_SECRET as string,
