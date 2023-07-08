@@ -1,8 +1,7 @@
-import { Suspense } from "react";
+import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import getCurrentUser from "./actions/getCurrentUser";
 import "./globals.css";
-import Loading from "./loading";
 
 export const metadata = {
   title: "Tukar-Menukar",
@@ -18,9 +17,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className="flex flex-col min-h-screen max-w-screen-sm mx-auto">
         <NavBar currentUser={currentUser} />
-        {children}
+        <div className="flex-grow p-5 bg-gray-50">{children}</div>
+        <Footer />
       </body>
     </html>
   );

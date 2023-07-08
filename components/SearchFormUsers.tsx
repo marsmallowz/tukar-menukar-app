@@ -8,7 +8,9 @@ export default function SearchFormUsers() {
 
   async function handleSearch(formdata: any) {
     const search = formdata.get("search");
-    pushQuery({ search: search });
+    const filter = formdata.get("filter");
+
+    pushQuery({ search: search, filter: filter });
   }
 
   return (

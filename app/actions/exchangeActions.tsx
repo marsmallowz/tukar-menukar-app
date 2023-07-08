@@ -48,6 +48,7 @@ export async function getExchanges(): Promise<any> {
     const sessionToken = cookies().get(
       process.env.SESSION_TOKEN_NAME as string
     );
+
     const decoded = await decode({
       token: sessionToken?.value,
       secret: process.env.NEXTAUTH_SECRET as string,

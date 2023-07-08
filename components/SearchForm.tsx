@@ -8,6 +8,7 @@ export default function SearchForm() {
 
   async function handleSearch(formdata: any) {
     const search = formdata.get("search");
+
     pushQuery({ search: search });
   }
 
@@ -17,13 +18,13 @@ export default function SearchForm() {
         <input
           type="search"
           name="search"
-          className="p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Search Skills"
+          className="p-2 text-sm text-gray-900 border border-gray-300  bg-gray-50 outline-none focus:gray-blue-500 focus:border-gray-500"
+          placeholder="Search"
         />
       </div>
       <button
         type="submit"
-        className="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+        className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium text-sm px-4 py-2"
       >
         Search
       </button>

@@ -16,7 +16,7 @@ export async function getAllSkillRequest() {
     });
 
     if (!decoded?.sub) {
-      throw new Error("Invalid certification");
+      return { requestSkills: [] };
     }
     const myUser = await prisma.user.findUnique({
       where: {

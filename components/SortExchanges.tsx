@@ -53,15 +53,6 @@ export default function SortExchanges() {
           >
             Decsending
           </Link>
-          {/* <button
-            type="button"
-            onClick={() => {
-              signOut();
-            }}
-            className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 block w-full px-4 py-2 text-left text-sm"
-          >
-            Sign out
-          </button> */}
         </div>
       </div>
     </div>

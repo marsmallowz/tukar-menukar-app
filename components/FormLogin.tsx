@@ -1,64 +1,64 @@
 "use client";
-import { signIn } from "next-auth/react";
+
+import React, { useRef, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
-
-interface InitialStateProps {
-  email: string;
-  password: string;
-}
-
-const initialState: InitialStateProps = {
-  email: "",
-  password: "",
-};
+import { signIn } from "next-auth/react";
 
 export default function FormLogin() {
+  const formRef = useRef<any>(null);
   const router = useRouter();
-  const [state, setState] = useState(initialState);
-  const onSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    signIn("credentials", {
-      ...state,
-      redirect: false,
-    }).then((callback) => {
-      if (callback?.ok) {
-        router.refresh();
-      }
-      if (callback?.error) {
-        throw new Error("Wrong Credentials");
-      }
+  const [isPending, startTransition] = useTransition();
+
+  async function handleLogin(formData: any) {
+    const email = formData.get("email");
+    const password = formData.get("password");
+    startTransition(async () => {
+      signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      }).then((callback) => {
+        if (callback?.ok) {
+          router.refresh();
+        }
+        if (callback?.error) {
+          throw new Error("Wrong Credentials");
+        }
+      });
+      await formRef.current.reset();
+      router.push("/");
     });
-    router.push("/");
-  };
-  function handleChange(event: any) {
-    setState({ ...state, [event.target.name]: event.target.value });
   }
+
   return (
-    <form
-      onSubmit={onSubmit}
-      className="flex flex-col justify-center h-[450px] w-[350px] mx-auto gap-2"
-    >
-      <input
-        type="text"
-        name="email"
-        placeholder="Email"
-        onChange={handleChange}
-        className="border-2 p-2"
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        onChange={handleChange}
-        className="border-2 p-2"
-      />
-      <button
-        type="submit"
-        className="text-white bg-slate-400 p-3 hover:bg-slate-500 "
+    <div className="flex flex-col justify-center items-center gap-2 h-[90vh] max-w-md mx-auto">
+      <div className="text-2xl font-bold self-start text-gray-600">Login</div>
+      <form
+        action={handleLogin}
+        ref={formRef}
+        className="flex flex-col justify-center gap-2 w-full"
       >
-        Masuk
-      </button>
-    </form>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email"
+          required
+          className="border-2 p-2"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+          className="border-2 p-2"
+        />
+        <button
+          type="submit"
+          className="text-white bg-slate-400 p-3 hover:bg-slate-500"
+        >
+          {isPending ? "Loading..." : "Masuk"}
+        </button>
+      </form>
+    </div>
   );
 }
