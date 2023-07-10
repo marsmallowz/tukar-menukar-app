@@ -2,7 +2,7 @@ import FormRegister from "../../components/FormRegister";
 
 export default function Home() {
   return (
-    <main>
+    <main className="">
       <FormRegister />
     </main>
   );

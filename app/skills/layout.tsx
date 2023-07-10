@@ -14,7 +14,7 @@ export default async function SkillLayout({
 }) {
   return (
     <SkillModalProvider>
-      <section className="p-2 flex-grow">
+      <section>
         {children}
         {listSkill}
         {offerSkills}

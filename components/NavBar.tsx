@@ -9,10 +9,11 @@ interface UserEntity {
 
 export default function NavBar({ currentUser }: UserEntity) {
   return (
-    <header className="flex justify-between px-4 py-2 bg-gray-400 items-center">
+    <header className="flex justify-between px-4 py-2 bg-gray-500 items-center">
       <nav>
         <Link href="/" className="text-white font-medium">
-          Tukar-Menukar
+          <div>Tukar</div>
+          <div>Menukar</div>
         </Link>
       </nav>
       <div className="flex space-x-4 items-center h-10">
@@ -23,8 +24,15 @@ export default function NavBar({ currentUser }: UserEntity) {
           </>
         ) : (
           <>
-            <Link href="/register">Daftar</Link>
-            <Link href="/login">Masuk</Link>
+            <Link href="/register" className="text-gray-200 font-medium">
+              Daftar
+            </Link>
+            <Link
+              href="/login"
+              className="p-2 bg-white text-gray-900 font-medium"
+            >
+              Masuk
+            </Link>
           </>
         )}
       </div>

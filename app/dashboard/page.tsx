@@ -37,7 +37,7 @@ export default async function Page({
                     key={exchange.id}
                     className="flex justify-between items-center"
                   >
-                    <div>{exchange.requestedUserId}</div>
+                    <div>{exchange.id}</div>
                     <Link href={`/exchanges/${exchange.id}`}>See</Link>
                   </div>
                 );

@@ -32,7 +32,9 @@ export default function FormLogin() {
 
   return (
     <div className="flex flex-col justify-center items-center gap-2 h-[90vh] max-w-md mx-auto">
-      <div className="text-2xl font-bold self-start text-gray-600">Login</div>
+      <div className="text-2xl font-bold self-start text-gray-600">
+        Silahkan Masuk
+      </div>
       <form
         action={handleLogin}
         ref={formRef}
@@ -54,7 +56,7 @@ export default function FormLogin() {
         />
         <button
           type="submit"
-          className="text-white bg-slate-400 p-3 hover:bg-slate-500"
+          className="text-white font-medium bg-gray-500 p-3 hover:bg-slate-600"
         >
           {isPending ? "Loading..." : "Masuk"}
         </button>

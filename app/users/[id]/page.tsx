@@ -46,6 +46,11 @@ export default async function Page({ params }: { params: { id: string } }) {
           )}
         </ul>
       </div>
+      <div className="flex flex-col gap-0.5">
+        <h1 className="font-medium text-lg">Exchanges with users : </h1>
+        <div>Exchange 1</div>
+        <div>Exchange 2</div>
+      </div>
       <FormCreateExchangeModal user={user} currentUser={currentUser} />
     </main>
   );

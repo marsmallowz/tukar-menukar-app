@@ -28,9 +28,9 @@ export default function FormRegister() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2 h-[90vh] max-w-md mx-auto">
+    <div className="flex flex-col justify-center items-center gap-2 h-[80vh] max-w-md mx-auto">
       <div className="text-2xl font-bold self-start text-gray-600">
-        Register
+        Pendaftaran
       </div>
       <form
         action={handleRegister}
@@ -60,7 +60,7 @@ export default function FormRegister() {
         />
         <button
           type="submit"
-          className="text-white bg-slate-400 p-3 hover:bg-slate-500"
+          className="text-white font-medium bg-gray-500 p-3 hover:bg-gray-600"
         >
           {isPending ? "Loading..." : "Daftar"}
         </button>
