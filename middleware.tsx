@@ -29,5 +29,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/settings", "/skills"],
+  matcher: ["/settings", "/skills", "/dashboard"],
 };
