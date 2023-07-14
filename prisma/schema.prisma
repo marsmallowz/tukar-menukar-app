@@ -38,8 +38,8 @@ model User {
   username          String     @unique
   role              Role       @default(USER)
   profile_pic       String?
-  emailVerified     DateTime?
-  hashedPassword    String
+  token             String?
+  hashedPassword    String?
   requestSkillsIDs  String[]   @db.ObjectId
   offerSkillsIDs    String[]   @db.ObjectId
   offerSkills       Skill[]    @relation("UserOfferSkills", fields: [offerSkillsIDs], references: [id])
