@@ -5,7 +5,9 @@ import CreateExchangeBtn from "../../../components/CreateExchangeBtn";
 import FormCreateExchangeModal from "../../../components/FormCreateExchangeModal";
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const user = await getUser(params.id);
+  const { user, exchange } = await getUser(params.id);
+  console.log(user);
+
   const currentUser = await getCurrentUser();
 
   return (
@@ -46,11 +48,43 @@ export default async function Page({ params }: { params: { id: string } }) {
           )}
         </ul>
       </div>
-      <div className="flex flex-col gap-0.5">
-        <h1 className="font-medium text-lg">Exchanges with users : </h1>
-        <div>Exchange 1</div>
-        <div>Exchange 2</div>
+      <div className="flex flex-col gap-0.5 w-full">
+        <h1 className="font-medium text-lg">Reviews: </h1>
+        {user?.reviewed.length ? (
+          <div className="flex flex-col divide-x-2">
+            {user?.reviewed.map((review) => {
+              return (
+                <div key={review.id} className="flex flex-col">
+                  <div>{review.id}</div>
+                  <div className="flex justify-between">
+                    <div>{review.skill.name}</div>
+                    <div>Rating {review.rating}/5</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div>Review tidak ditemukan</div>
+        )}
       </div>
+      {/* <div className="flex flex-col gap-0.5 w-full ">
+        <h1 className="font-medium text-lg">Current Exchanges: </h1>
+        {exchange.length ? (
+          <div className="flex flex-col divide-y-2">
+            {exchange.map((exchange) => {
+              return (
+                <div key={exchange.id} className="flex justify-between py-2">
+                  <div>{exchange.id}</div>
+                  <div>{exchange.status}</div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div>Exchanges not found</div>
+        )}
+      </div> */}
       <FormCreateExchangeModal user={user} currentUser={currentUser} />
     </main>
   );

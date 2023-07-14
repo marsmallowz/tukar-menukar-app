@@ -3,6 +3,7 @@ import { getExchanges } from "../actions/exchangeActions";
 import Link from "next/link";
 import SortExchanges from "../../components/SortExchanges";
 import PaginationNumber from "../../components/PaginationNumber";
+import { MdChevronRight } from "react-icons/md";
 
 export default async function Page({
   params,
@@ -11,7 +12,8 @@ export default async function Page({
   params: any;
   searchParams: any;
 }) {
-  const { exchanges }: { exchanges: any } = await getExchanges();
+  const { exchanges, totalPage }: { exchanges: any; totalPage: number } =
+    await getExchanges(searchParams);
 
   return (
     <div>
@@ -29,26 +31,36 @@ export default async function Page({
             <h1 className="text-2xl font-bold">My Exchanges</h1>
             <SortExchanges />
           </div>
-          <div className="flex flex-col gap-1 mb-4 max-h-[calc(100vh/3)]">
+          {/* max-h-[calc(100vh/3)] */}
+          <ul className="divide-y-2 divide-gray-200 gap-1 mb-4">
             {exchanges.length ? (
               exchanges.map((exchange: any) => {
                 return (
-                  <div
+                  <li
                     key={exchange.id}
-                    className="flex justify-between items-center"
+                    className="flex py-4 justify-between items-center"
                   >
-                    <div>{exchange.id}</div>
-                    <Link href={`/exchanges/${exchange.id}`}>See</Link>
-                  </div>
+                    <div className="flex flex-col">
+                      <div>id: {exchange.id}</div>
+                      <div>
+                        {exchange.skillRequested?.name} -{" "}
+                        {exchange.skillOffered?.name ?? "Not set yet"}
+                      </div>
+                      <div>status: {exchange.status}</div>
+                    </div>
+                    <Link href={`/exchanges/${exchange.id}`}>
+                      <MdChevronRight />
+                    </Link>
+                  </li>
                 );
               })
             ) : (
               <div>Exchange not found</div>
             )}
-          </div>
+          </ul>
         </div>
       ) : null}
-      <PaginationNumber totalPages={5} />
+      <PaginationNumber totalPages={totalPage} />
     </div>
   );
 }

@@ -91,3 +91,20 @@ export async function deleteSkill(id: string): Promise<any> {
     throw new Error(error.message);
   }
 }
+
+export async function getPopularSkills() {
+  try {
+    const skills = await prisma.skill.findMany({
+      orderBy: {
+        userOffers: {
+          _count: "desc",
+        },
+      },
+      take: 5,
+    });
+    return skills;
+  } catch (error: any) {
+    console.log({ message: error });
+    throw new Error(error);
+  }
+}

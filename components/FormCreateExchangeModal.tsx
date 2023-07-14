@@ -9,6 +9,12 @@ export default function FormCreateExchangeModal({ user, currentUser }: any) {
   const [showModal, setShowModal] = useState(false);
   const [selectedRequestSkill, setSelectedRequestSkill] = useState("");
 
+  const today = new Date();
+  today.setDate(today.getDate() + 1);
+  const [dateStarted, setDateStarted] = useState(
+    today.toISOString().split("T")[0]
+  );
+
   async function handleCreateExchange(formData: any) {
     const requestedUserId = user.id;
     const dateStarted: string = formData.get("dateStarted");
@@ -98,7 +104,7 @@ export default function FormCreateExchangeModal({ user, currentUser }: any) {
                     >
                       Request Skill
                     </label>
-                    <div className="mt-2  bg-slate-100">
+                    <div className="mt-2 bg-slate-100">
                       <select
                         id="requestSkill"
                         name="requestSkill"
@@ -137,7 +143,13 @@ export default function FormCreateExchangeModal({ user, currentUser }: any) {
                         id="dateStarted"
                         name="dateStarted"
                         type="date"
+                        min={today.toISOString().split("T")[0]}
                         required
+                        onChange={(e) => {
+                          console.log(typeof e.target.value);
+                          console.log(e.target.value);
+                          setDateStarted(e.target.value);
+                        }}
                         className="border-2 p-2 w-full"
                       />
                     </div>
@@ -154,11 +166,7 @@ export default function FormCreateExchangeModal({ user, currentUser }: any) {
                         id="dateEnded"
                         name="dateEnded"
                         type="date"
-                        onChange={(e) => {
-                          console.log(typeof e.target.value);
-
-                          console.log(e.target.value);
-                        }}
+                        min={dateStarted}
                         required
                         className="border-2 p-2 w-full"
                       />
@@ -169,7 +177,7 @@ export default function FormCreateExchangeModal({ user, currentUser }: any) {
               <div className="bg-gray-50 py-3 flex flex-row-reverse px-6">
                 <button
                   type="submit"
-                  className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+                  className="mt-3 ml-3 inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:mt-0 sm:w-auto"
                 >
                   Create
                 </button>

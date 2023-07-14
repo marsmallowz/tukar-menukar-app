@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useTransition } from "react";
-import register from "../app/actions/authActions";
+import { register } from "../app/actions/authActions";
 
 export default function FormRegister() {
   const formRef = useRef<any>(null);
@@ -11,12 +11,10 @@ export default function FormRegister() {
   async function handleRegister(formData: any) {
     const email = formData.get("email");
     const username = formData.get("username");
-    const password = formData.get("password");
     startTransition(async () => {
       const user = await register({
         email,
         username,
-        password,
       });
       if (user?.id) {
         setStatus("success");
@@ -38,7 +36,7 @@ export default function FormRegister() {
         className="flex flex-col justify-center gap-2 w-full"
       >
         <input
-          type="text"
+          type="email"
           name="email"
           placeholder="Email"
           required
@@ -48,13 +46,6 @@ export default function FormRegister() {
           type="text"
           name="username"
           placeholder="Username"
-          required
-          className="border-2 p-2"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
           required
           className="border-2 p-2"
         />

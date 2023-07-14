@@ -1,6 +1,8 @@
 "use server";
 
+import { User } from "@prisma/client";
 import prisma from "../../lib/prismadb";
+import jwt from "jsonwebtoken";
 
 export async function getUsers(searchParams: any) {
   const search = searchParams?.search || "";
@@ -73,15 +75,69 @@ export async function getUser(id: string) {
       where: {
         id: id,
       },
-      include: {
+      select: {
+        id: true,
+        email: true,
+        username: true,
         offerSkills: true,
         requestSkills: true,
+        reviewed: {
+          include: {
+            skill: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    const exchange = await prisma.exchange.findMany({
+      where: {
+        OR: [
+          {
+            offeredUserId: user?.id,
+          },
+          {
+            requestedUserId: user?.id,
+          },
+        ],
+      },
+    });
+
+    return { user, exchange };
+  } catch (error: any) {
+    console.log({ error: "ada", message: error });
+    throw new Error(error);
+  }
+}
+
+export async function getUserFromToken(token: string) {
+  try {
+    const decodedToken: any = jwt.verify(token, process.env.TOKEN_SECRET!);
+    if (!decodedToken.email || !decodedToken.username) {
+      throw new Error("Token Invalid");
+    }
+    const user = await prisma.user.findFirst({
+      where: {
+        email: decodedToken.email,
+        username: decodedToken.username,
+        token: {
+          isSet: true,
+        },
+      },
+      select: {
+        id: true,
+        email: true,
+        username: true,
       },
     });
 
     return user;
   } catch (error: any) {
-    console.log({ error: "ada", message: error });
-    throw new Error(error);
+    console.log(error);
+
+    return null;
   }
 }

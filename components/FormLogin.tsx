@@ -41,7 +41,7 @@ export default function FormLogin() {
         className="flex flex-col justify-center gap-2 w-full"
       >
         <input
-          type="text"
+          type="email"
           name="email"
           placeholder="Email"
           required

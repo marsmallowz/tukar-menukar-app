@@ -43,7 +43,11 @@ export async function createExchange({
   }
 }
 
-export async function getExchanges(): Promise<any> {
+export async function getExchanges(searchParams: any): Promise<any> {
+  const limit = searchParams.limit * 1 || 5;
+  const page = searchParams.page * 1 || 1;
+  const skip = searchParams.skip * 1 || limit * (page - 1);
+
   try {
     const sessionToken = cookies().get(
       process.env.SESSION_TOKEN_NAME as string
@@ -70,8 +74,39 @@ export async function getExchanges(): Promise<any> {
           },
         ],
       },
+      include: {
+        skillOffered: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        skillRequested: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      skip: skip,
+      take: limit,
     });
-    return { exchanges };
+
+    const count = await prisma.exchange.count({
+      where: {
+        OR: [
+          {
+            offeredUserId: decoded.sub,
+          },
+          {
+            requestedUserId: decoded.sub,
+          },
+        ],
+      },
+    });
+
+    const totalPage = Math.ceil(count / limit);
+    return { exchanges, totalPage };
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -110,10 +145,18 @@ export async function getExchange(id: string) {
             description: true,
           },
         },
-        reviews: true,
+        reviews: {
+          include: {
+            review: {
+              select: {
+                id: true,
+                username: true,
+              },
+            },
+          },
+        },
       },
     });
-
     return exchange;
   } catch (error: any) {
     console.log({ error: "ada", message: error });

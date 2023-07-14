@@ -23,7 +23,7 @@ const Carousel = () => {
   }, []);
 
   return (
-    <div className="relative p-5">
+    <div className="relative px-5 py-7">
       <Image
         src={images[currentIndex]}
         alt={`Slide ${currentIndex + 1}`}
