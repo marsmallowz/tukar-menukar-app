@@ -26,7 +26,7 @@ export default async function Home() {
         "temukan pengguna yang menyediakan kemampuan yang kamu butuhkan, dan pengguna yang membutuhkan keterampilan anda.",
     },
     {
-      id: 3,
+      id: 4,
       title: "Buat persetujuan",
       details:
         "persetujuan dibuat untuk mendata pertukaran, seperti status pertukaran, tanggal pertukaran, keterampilan yang ditukar dan lain sebagainya. ",

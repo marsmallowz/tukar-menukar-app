@@ -7,7 +7,7 @@ import FormCreateReviewModal from "../../../components/FomCreateReviewModal";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const exchange = await getExchange(params.id);
-  const user = await getUser(exchange?.offeredUserId as string);
+  const { user } = await getUser(exchange?.offeredUserId as string);
   const currentUser = await getCurrentUser();
   console.log(exchange);
   console.log(currentUser);
