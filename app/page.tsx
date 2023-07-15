@@ -55,10 +55,10 @@ export default async function Home() {
   ];
   return (
     <main>
-      <div className="text-gray-900 text-2xl font-bold text-center w-3/4 mx-auto">
+      <div className="mt-3 sm:mt-5 text-gray-900 text-lg w-11/12 font-bold text-center mx-auto sm:text-2xl sm:w-3/4">
         Tukar keterampilan anda dengan keterampilan orang lain.
       </div>
-      <div className="py-5 text-center text-gray-500">
+      <div className="py-3 text-center text-xs text-gray-500 sm:text-base sm:py-5 ">
         Dengan <span className="font-semibold">Tukar-Menukar</span> kamu dapat
         belajar keterampilan baru. Cari orang yang membutuhkan keterampilan kamu
         dan orang yang kamu butuh keterampilannya.
@@ -66,22 +66,22 @@ export default async function Home() {
       <div className="flex gap-5 justify-center items-center">
         <Link
           href={"/register"}
-          className="p-3  text-white font-semibold bg-gray-600 hover:bg-gray-700 cursor-pointer "
+          className="p-2 text-sm text-white font-semibold bg-gray-600 hover:bg-gray-700 cursor-pointer sm:text-base sm:p-3"
         >
           Daftar Gratis
         </Link>
         <Link
           href={"/about"}
-          className="p-3 text-gray-900 font-medium border bg-white hover:bg-gray-100 cursor-pointer "
+          className="p-2 text-sm text-gray-900 font-medium border bg-white hover:bg-gray-100 cursor-pointer sm:text-base sm:p-3"
         >
           Baca Selengkapnya
         </Link>
       </div>
       <Carousel />
 
-      <div className="text-xl font-bold">Popular Skills</div>
+      <div className="text-base sm:text-xl font-bold">Popular Skills</div>
       {popularSkills.length ? (
-        <ul className="list-decimal space-y-1">
+        <ul className="text-sm sm:text-base list-decimal space-y-1">
           {popularSkills.map((skill) => {
             return (
               <li key={skill.id} className="list-inside">
@@ -95,11 +95,13 @@ export default async function Home() {
       )}
       <div className="flex flex-col my-6">
         <div>
-          <div className="text-gray-900 text-xl font-semibold">Fitur-fitur</div>
-          <div>
+          <div className="text-gray-900 text-base sm:text-xl font-semibold">
+            Fitur-fitur
+          </div>
+          <div className="text-sm sm:text-base">
             Berikut beberapa fitur yang disediakan aplikasi Tukar-Menukar:
           </div>
-          <ul className="list-disc list-outside px-10">
+          <ul className="text-sm sm:text-base list-disc list-outside px-10">
             {features.map((feature) => {
               return (
                 <li key={feature.id}>
@@ -119,16 +121,16 @@ export default async function Home() {
         />
       </div>
       <div className="flex flex-col mt-6 mb-5">
-        <div className="text-gray-500">Penjelasan</div>
+        <div className="text-sm sm:text-base text-gray-500">Penjelasan</div>
         <div>
-          <div className="text-gray-900 text-xl font-semibold">
+          <div className="text-base sm:text-xl text-gray-900 font-semibold">
             Bagaimana cara menukar keterampilan?
           </div>
-          <div>
+          <div className="text-sm sm:text-base">
             Untuk menukar keterampilan anda dengan keterampilan orang lain cukup
             mudah, berikut langkah-langkahnya:
           </div>
-          <ul className="list-decimal list-outside px-10">
+          <ul className="text-sm sm:text-base list-decimal list-outside px-10">
             {swapSteps.map((step) => {
               return (
                 <li key={step.id}>
