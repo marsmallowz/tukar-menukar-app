@@ -50,7 +50,7 @@ export default async function Home() {
       id: 3,
       title: "Popular Skills",
       details:
-        "Digunakan untuk melihat skill yang disediakan maupun skill yang dibutuhkan.",
+        "Digunakan untuk melihat skill yang paling banyak disediakan maupun skill yang dibutuhkan.",
     },
   ];
   return (
