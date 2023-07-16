@@ -45,7 +45,7 @@ export default function FormCreateExchangeModal({ user, currentUser }: any) {
           !currentUser?.offerSkills.length ||
           !currentUser?.requestSkills.length
         }
-        className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:w-auto disabled:cursor-not-allowed disabled:bg-gray-400"
+        className="rounded-md bg-gray-600 p-2 text-md font-semibold text-white shadow-sm hover:bg-gray-500 sm:w-auto disabled:cursor-not-allowed disabled:bg-gray-400"
       >
         Create Exchange
       </button>
