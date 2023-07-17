@@ -37,7 +37,8 @@ model User {
   email             String     @unique
   username          String     @unique
   role              Role       @default(USER)
-  profile_pic       String?
+  profileImageId    String?
+  profileImage      String?
   token             String?
   hashedPassword    String?
   requestSkillsIDs  String[]   @db.ObjectId
