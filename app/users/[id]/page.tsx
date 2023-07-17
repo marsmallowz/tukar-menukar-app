@@ -5,9 +5,7 @@ import CreateExchangeBtn from "../../../components/CreateExchangeBtn";
 import FormCreateExchangeModal from "../../../components/FormCreateExchangeModal";
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const { user, exchange } = await getUser(params.id);
-  console.log(user);
-
+  const { user, userRating } = await getUser(params.id);
   const currentUser = await getCurrentUser();
 
   return (
@@ -15,6 +13,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="flex flex-col gap-0.5">
         <h1 className="font-medium text-lg">Username: </h1>
         <div>{user?.username}</div>
+      </div>
+      <div className="flex flex-col gap-0.5">
+        <h1 className="font-medium text-lg">Rate: </h1>
+        <div>{userRating}/5</div>
       </div>
       <div className="flex flex-col gap-0.5">
         <h1 className="font-medium text-lg">Offer Skills:</h1>
@@ -51,16 +53,20 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="flex flex-col gap-0.5 w-full">
         <h1 className="font-medium text-lg">Reviews: </h1>
         {user?.reviewed.length ? (
-          <div className="flex flex-col divide-x-2">
+          <div className="flex flex-col divide-y-2 gap-4">
             {user?.reviewed.map((review) => {
               return (
-                <div key={review.id} className="flex flex-col">
-                  <div>{review.id}</div>
-                  <div className="flex justify-between">
-                    <div>{review.skill.name}</div>
-                    <div>Rating {review.rating}/5</div>
+                <>
+                  <div key={review.id} className="flex flex-col gap-1">
+                    <div className="flex justify-between">
+                      <div>{review.skill.name}</div>
+                      <div>Rating {review.rating}/5</div>
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {review.comment}
+                    </div>
                   </div>
-                </div>
+                </>
               );
             })}
           </div>

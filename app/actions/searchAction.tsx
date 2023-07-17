@@ -5,8 +5,8 @@ import prisma from "../../lib/prismadb";
 export async function getSearchUser(searchParams: any) {
   const search = searchParams?.search || "";
   const sort = searchParams.sort || "desc";
-  const filter = searchParams?.filter || "";
-  const limit = searchParams.limit * 1 || 5;
+  const filter = searchParams?.filter || "username";
+  const limit = searchParams.limit * 1 || 6;
   const page = searchParams.page * 1 || 1;
   const skip = searchParams.skip * 1 || limit * (page - 1);
   try {
@@ -14,36 +14,13 @@ export async function getSearchUser(searchParams: any) {
       where: {
         OR: [
           {
-            ...(filter === "username" || filter === ""
+            ...(filter === "username"
               ? { username: { contains: search, mode: "insensitive" } }
               : {}),
           },
           {
-            ...(filter === "skill" || filter === ""
-              ? {
-                  offerSkills: {
-                    some: {
-                      name: {
-                        contains: search,
-                        mode: "insensitive",
-                      },
-                    },
-                  },
-                }
-              : {}),
-          },
-          {
-            ...(filter === "skill" || filter === ""
-              ? {
-                  requestSkills: {
-                    some: {
-                      name: {
-                        contains: search,
-                        mode: "insensitive",
-                      },
-                    },
-                  },
-                }
+            ...(filter === "email"
+              ? { email: { contains: search, mode: "insensitive" } }
               : {}),
           },
         ],
@@ -51,10 +28,19 @@ export async function getSearchUser(searchParams: any) {
       select: {
         id: true,
         username: true,
+        email: true,
+        _count: {
+          select: {
+            offerSkills: true,
+            requestSkills: true,
+            reviewed: true,
+          },
+        },
       },
       skip: skip,
       take: limit,
     });
+
     const count = await prisma.user.count({
       where: {
         OR: [

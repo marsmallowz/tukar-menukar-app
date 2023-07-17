@@ -73,7 +73,7 @@ export default function FormCreateExchangeModal({ user, currentUser }: any) {
                     <div className="mt-1 ">
                       <input
                         type="text"
-                        defaultValue={currentUser.username}
+                        defaultValue={currentUser?.username ?? ""}
                         required
                         className="border-2 p-2 w-full"
                         disabled={true}

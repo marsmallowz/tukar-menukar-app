@@ -45,25 +45,16 @@ export default function SearchFilter() {
             }}
             className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 block px-4 py-2 text-sm cursor-pointer"
           >
-            Default
-          </div>
-          <div
-            onClick={() => {
-              pushQuery({ filter: "username" });
-              setShowOptions(false);
-            }}
-            className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 block px-4 py-2 text-sm cursor-pointer"
-          >
             Username
           </div>
           <div
             onClick={() => {
-              pushQuery({ filter: "skill" });
+              pushQuery({ filter: "email" });
               setShowOptions(false);
             }}
             className="text-gray-700 hover:bg-gray-100 hover:text-gray-900 block px-4 py-2 text-sm cursor-pointer"
           >
-            Skill
+            Email
           </div>
         </div>
       </div>

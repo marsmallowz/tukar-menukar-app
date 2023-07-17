@@ -75,7 +75,7 @@ export default async function Home() {
       </div>
       <Carousel />
 
-      <div className="text-base sm:text-xl font-bold">Popular Skills</div>
+      <div className="text-base sm:text-xl font-semibold">Popular Skills</div>
       {popularSkills.length ? (
         <ul className="text-sm sm:text-base list-decimal space-y-1">
           {popularSkills.map((skill) => {

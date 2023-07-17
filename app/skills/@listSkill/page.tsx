@@ -16,9 +16,9 @@ export default async function ListSkill({
     await getAllSkills(searchParams);
   return (
     <>
-      <h1 className="text-2xl font-bold">Skill List</h1>
+      <h1 className="text-2xl font-bold">Find Skills</h1>
       <SearchForm />
-      <h2 className="text-lg font-medium my-2">Name</h2>
+      <h1 className="text-xl font-semibold mt-3 mb-1">List Skill </h1>
       <div className="flex flex-col gap-3 h-[calc(100vh/3.4)]">
         {skills !== undefined ? (
           skills.map((skill: any) => {

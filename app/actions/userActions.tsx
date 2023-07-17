@@ -106,7 +106,25 @@ export async function getUser(id: string) {
       },
     });
 
-    return { user, exchange };
+    const calculateAverageRating = function calculateAverageRating(
+      reviewed: any
+    ) {
+      let totalRating = 0;
+
+      for (let i = 0; i < reviewed.length; i++) {
+        totalRating += reviewed[i].rating;
+      }
+
+      if (reviewed.length > 0) {
+        const averageRating = totalRating / reviewed.length;
+        return averageRating;
+      } else {
+        return 0.0;
+      }
+    };
+
+    const userRating = calculateAverageRating(user?.reviewed);
+    return { user, userRating, exchange };
   } catch (error: any) {
     console.log({ error: "ada", message: error });
     throw new Error(error);

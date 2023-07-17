@@ -19,7 +19,7 @@ export default async function Page({
     <div>
       <div className="flex justify-end">
         <Link
-          href={"/search"}
+          href={"/users"}
           className="p-2 text-white font-medium bg-gray-600 hover:bg-gray-700 cursor-pointer "
         >
           Create Exchange
