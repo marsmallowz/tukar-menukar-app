@@ -79,6 +79,7 @@ export async function getUser(id: string) {
         id: true,
         email: true,
         username: true,
+        profileImage: true,
         offerSkills: true,
         requestSkills: true,
         reviewed: {
