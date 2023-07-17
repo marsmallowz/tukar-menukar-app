@@ -18,7 +18,11 @@ export default async function getCurrentUser() {
       where: {
         email: session.user.email as string,
       },
-      include: {
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        profileImage: true,
         offerSkills: true,
         requestSkills: true,
       },
@@ -28,11 +32,7 @@ export default async function getCurrentUser() {
       return null;
     }
 
-    return {
-      ...currentUser,
-      createdAt: currentUser.createdAt.toISOString(),
-      updatedAt: currentUser.updatedAt.toISOString(),
-    };
+    return currentUser;
   } catch (error: any) {
     return null;
   }
