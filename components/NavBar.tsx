@@ -19,7 +19,7 @@ export default function NavBar({ currentUser }: UserEntity) {
       <div className="flex space-x-4 items-center h-10">
         {currentUser !== null ? (
           <>
-            <ProfileNavBar username={currentUser.username} />
+            <ProfileNavBar username={currentUser?.username} />
             {/* <ButtonLogout /> */}
           </>
         ) : (
