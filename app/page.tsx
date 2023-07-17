@@ -3,35 +3,12 @@ import Carousel from "../components/Carousel";
 import { getPopularSkills } from "./actions/skillActions";
 import Link from "next/link";
 import Image from "next/image";
+import getCurrentUser from "./actions/getCurrentUser";
 
 export default async function Home() {
+  const currentUser = await getCurrentUser();
+
   const popularSkills = await getPopularSkills();
-  const swapSteps = [
-    {
-      id: 1,
-      title: "Daftar",
-      details:
-        "melakukan pendaftaran terlebih dahulu dengan email dan username.",
-    },
-    {
-      id: 2,
-      title: "Atur Keterampilan",
-      details:
-        "atur keterampilan yang anda butuhkan dan keterampilan yang dapat anda sediakan.",
-    },
-    {
-      id: 3,
-      title: "Temukan Pengguna",
-      details:
-        "temukan pengguna yang menyediakan kemampuan yang kamu butuhkan, dan pengguna yang membutuhkan keterampilan anda.",
-    },
-    {
-      id: 4,
-      title: "Buat persetujuan",
-      details:
-        "persetujuan dibuat untuk mendata pertukaran, seperti status pertukaran, tanggal pertukaran, keterampilan yang ditukar dan lain sebagainya. ",
-    },
-  ];
 
   const features = [
     {
@@ -64,18 +41,37 @@ export default async function Home() {
         dan orang yang kamu butuh keterampilannya.
       </div>
       <div className="flex gap-5 justify-center items-center">
-        <Link
-          href={"/register"}
-          className="p-2 text-sm text-white font-semibold bg-gray-600 hover:bg-gray-700 cursor-pointer sm:text-base sm:p-3"
-        >
-          Daftar Gratis
-        </Link>
-        <Link
-          href={"/about"}
-          className="p-2 text-sm text-gray-900 font-medium border bg-white hover:bg-gray-100 cursor-pointer sm:text-base sm:p-3"
-        >
-          Baca Selengkapnya
-        </Link>
+        {currentUser?.id ? (
+          <>
+            <Link
+              href={"/users"}
+              className="p-2 text-sm text-white font-semibold bg-gray-600 hover:bg-gray-700 cursor-pointer sm:text-base sm:p-3"
+            >
+              Temukan Pengguna
+            </Link>
+            <Link
+              href={"/skills"}
+              className="p-2 text-sm text-gray-900 font-medium border bg-white hover:bg-gray-100 cursor-pointer sm:text-base sm:p-3"
+            >
+              Atur Keterampilan
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              href={"/register"}
+              className="p-2 text-sm text-white font-semibold bg-gray-600 hover:bg-gray-700 cursor-pointer sm:text-base sm:p-3"
+            >
+              Daftar Gratis
+            </Link>
+            <Link
+              href={"/about"}
+              className="p-2 text-sm text-gray-900 font-medium border bg-white hover:bg-gray-100 cursor-pointer sm:text-base sm:p-3"
+            >
+              Baca Selengkapnya
+            </Link>
+          </>
+        )}
       </div>
       <Carousel />
 
@@ -119,28 +115,6 @@ export default async function Home() {
           height={300}
           className="mx-auto py-4"
         />
-      </div>
-      <div className="flex flex-col mt-6 mb-5">
-        <div className="text-sm sm:text-base text-gray-500">Penjelasan</div>
-        <div>
-          <div className="text-base sm:text-xl text-gray-900 font-semibold">
-            Bagaimana cara menukar keterampilan?
-          </div>
-          <div className="text-sm sm:text-base">
-            Untuk menukar keterampilan anda dengan keterampilan orang lain cukup
-            mudah, berikut langkah-langkahnya:
-          </div>
-          <ul className="text-sm sm:text-base list-decimal list-outside px-10">
-            {swapSteps.map((step) => {
-              return (
-                <li key={step.id}>
-                  <span className="font-semibold">{step.title}</span>,{" "}
-                  {step.details}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
       </div>
     </main>
   );
