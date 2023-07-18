@@ -32,7 +32,7 @@ export default async function RequestSkills() {
             );
           })
         ) : (
-          <div>Kosong</div>
+          <div>Request skills not found.</div>
         )}
       </div>
     </>

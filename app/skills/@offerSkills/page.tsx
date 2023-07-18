@@ -18,7 +18,7 @@ export default async function Page() {
             );
           })
         ) : (
-          <div>Kosong</div>
+          <div>Offer skills not found.</div>
         )}
       </div>
     </>
