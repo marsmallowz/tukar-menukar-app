@@ -88,6 +88,7 @@ export default function FormSetPassword({
           ? "Verifikasi Gagal"
           : ""}
       </div>
+      <div>{status === "success" ? "Silahkan Masuk" : ""}</div>
     </div>
   );
 }
