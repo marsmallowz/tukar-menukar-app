@@ -63,6 +63,7 @@ export default function FormRegister() {
           ? "Registration Failed"
           : ""}
       </div>
+      <div>{status === "success" ? "Check your email" : ""}</div>
     </div>
   );
 }
