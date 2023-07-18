@@ -14,7 +14,6 @@ export default async function Page({
 }) {
   const { exchanges, totalPage }: { exchanges: any; totalPage: number } =
     await getExchanges(searchParams);
-
   return (
     <div>
       <div className="flex justify-end">
@@ -25,41 +24,41 @@ export default async function Page({
           Create Exchange
         </Link>
       </div>
-      {exchanges.length ? (
-        <div>
-          <div className="flex justify-between mt-4 mb-1">
-            <h1 className="text-2xl font-bold">My Exchanges</h1>
-            <SortExchanges />
-          </div>
-          {/* max-h-[calc(100vh/3)] */}
-          <ul className="divide-y-2 divide-gray-200 gap-1 mb-4">
-            {exchanges.length ? (
-              exchanges.map((exchange: any) => {
-                return (
-                  <li
-                    key={exchange.id}
-                    className="flex py-4 justify-between items-center"
-                  >
-                    <div className="flex flex-col">
-                      <div>id: {exchange.id}</div>
-                      <div>
-                        {exchange.skillRequested?.name} -{" "}
-                        {exchange.skillOffered?.name ?? "Not set yet"}
-                      </div>
-                      <div>status: {exchange.status}</div>
-                    </div>
-                    <Link href={`/exchanges/${exchange.id}`}>
-                      <MdChevronRight />
-                    </Link>
-                  </li>
-                );
-              })
-            ) : (
-              <div>Exchange not found</div>
-            )}
-          </ul>
+
+      <div>
+        <div className="flex justify-between mt-4 mb-1">
+          <h1 className="text-2xl font-bold">My Exchanges</h1>
+          <SortExchanges />
         </div>
-      ) : null}
+        {/* max-h-[calc(100vh/3)] */}
+        {exchanges.length ? (
+          <ul className="divide-y-2 divide-gray-200 gap-1 mb-4">
+            {exchanges.map((exchange: any) => {
+              return (
+                <li
+                  key={exchange.id}
+                  className="flex py-4 justify-between items-center"
+                >
+                  <div className="flex flex-col">
+                    <div>id: {exchange.id}</div>
+                    <div>
+                      {exchange.skillRequested?.name} -{" "}
+                      {exchange.skillOffered?.name ?? "Not set yet"}
+                    </div>
+                    <div>status: {exchange.status}</div>
+                  </div>
+                  <Link href={`/exchanges/${exchange.id}`}>
+                    <MdChevronRight />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <div>Exchange not found</div>
+        )}
+      </div>
+
       <PaginationNumber totalPages={totalPage} />
     </div>
   );
