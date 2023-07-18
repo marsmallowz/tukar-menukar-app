@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ChangeEvent, useRef, useState } from "react";
-import { uploadPhoto } from "../app/actions/settingsActions";
+import { checkUsername, uploadPhoto } from "../app/actions/settingsActions";
 import Image from "next/image";
 
 export default function FormUpdateProfile({
@@ -11,11 +11,11 @@ export default function FormUpdateProfile({
 }) {
   const formRef = useRef<any>();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [image, setImage] = useState<File | null>(null);
-  const [statusUpdate, setStatusUpdate] = useState("");
-  const [isFileError, setIsFileError] = useState("");
-  async function handeleInputImage(
+  const [available, setAvailable] = useState<boolean | null>(null);
+  const [username, setUsername] = useState(currentUser?.username);
+
+  async function handleInputImage(
     e: ChangeEvent<HTMLInputElement>
   ): Promise<void> {
     const files = e.target.files;
@@ -30,6 +30,14 @@ export default function FormUpdateProfile({
       alert("File not image or to large");
     }
   }
+
+  async function handleInputUsername(
+    e: ChangeEvent<HTMLInputElement>
+  ): Promise<void> {
+    const username = e.target.value;
+    setUsername(username);
+  }
+
   async function handleUpload(formData: FormData) {
     const username = formData.get("username");
     if (image === null && (username as string) === currentUser.username) {
@@ -85,7 +93,7 @@ export default function FormUpdateProfile({
           type="file"
           accept="image/*"
           ref={fileInputRef}
-          onChange={handeleInputImage}
+          onChange={handleInputImage}
           className="hidden"
         />
         <div className="flex gap-2">
@@ -94,14 +102,30 @@ export default function FormUpdateProfile({
             name="username"
             type="text"
             placeholder="Username"
-            defaultValue={currentUser?.username}
+            defaultValue={username}
+            onChange={handleInputUsername}
             required
             className="border-2 p-2 w-3/4"
           />
           <input
             type="button"
             value={"Check"}
-            className="w-1/4 text-white p-2 border-2 bg-gray-500 hover:bg-gray-600 cursor-pointer"
+            onClick={async () => {
+              if (currentUser.username === username) {
+                alert("Username not change");
+                setAvailable(null);
+                return;
+              }
+              const res = await checkUsername(username);
+              setAvailable(res.available);
+            }}
+            className={`w-1/4 text-white p-2 border-2 cursor-pointer ${
+              available === null
+                ? "bg-gray-500 hover:bg-gray-600"
+                : available === true
+                ? "bg-green-500 hover:bg-green-600"
+                : "bg-red-500 hover:bg-red-600"
+            }`}
           />
         </div>
         <input
