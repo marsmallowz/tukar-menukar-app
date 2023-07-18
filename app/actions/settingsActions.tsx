@@ -5,9 +5,9 @@ import fs from "fs/promises";
 import { randomUUID } from "crypto";
 import os from "os";
 import { v2 as cloudinary } from "cloudinary";
-import jwt from "jsonwebtoken";
 import { cookies } from "next/dist/client/components/headers";
 import { decode } from "next-auth/jwt";
+import { revalidatePath } from "next/cache";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -75,34 +75,49 @@ export async function uploadPhoto(formData: FormData) {
     if (profileImage !== null) {
       const newFile = await savePhotoToLocal(formData);
 
-      if (!newFile) {
-        throw new Error("Image not found");
+      if (newFile) {
+        const res = await cloudinary.uploader.upload(newFile.filepath, {
+          folder: "nextjs_upload",
+        });
+
+        await prisma?.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            profileImageId: res.public_id,
+            profileImage: res.secure_url,
+          },
+        });
+
+        if (user.profileImageId !== null) {
+          await cloudinary.uploader.destroy(user.profileImageId);
+        }
+
+        fs.unlink(newFile.filepath);
       }
-
-      const res = await cloudinary.uploader.upload(newFile.filepath, {
-        folder: "nextjs_upload",
-      });
-
-      await prisma?.user.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          profileImageId: res.public_id,
-          profileImage: res.secure_url,
-        },
-      });
-
-      if (user.profileImageId !== null) {
-        await cloudinary.uploader.destroy(user.profileImageId);
-      }
-
-      fs.unlink(newFile.filepath);
     }
-
+    revalidatePath("/settings");
     return { status: "success" };
   } catch (error) {
     console.log(error);
     return { status: "failed" };
+  }
+}
+
+export async function checkUsername(username: string) {
+  try {
+    const user = await prisma?.user.findUnique({
+      where: {
+        username: username,
+      },
+    });
+    if (!user) {
+      return { available: true };
+    }
+    return { available: false };
+  } catch (error) {
+    console.log(error);
+    return { available: false };
   }
 }
