@@ -44,7 +44,7 @@ export async function register({
       from: process.env.EMAIL_USER,
       to: email,
       // to: "alsandymaulana@gmail.com",
-      subject: "Verification account Tukar-Menukar App",
+      subject: "Tukar-Menukar App - Verification account ",
       html: `Halo ${username},<br><br>untuk verfikasi silahkan klik ${newTabLink}.<br><br>Terima kasih!`,
     };
 
