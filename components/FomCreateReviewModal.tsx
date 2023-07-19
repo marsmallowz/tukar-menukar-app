@@ -109,7 +109,7 @@ export default function FormCreateReviewModal({ exchange, currentUser }: any) {
               <div className="bg-gray-50 py-3 flex flex-row-reverse px-6">
                 <button
                   type="submit"
-                  className="mt-3 ml-3 inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:mt-0 sm:w-auto"
+                  className="mt-3 ml-3 inline-flex w-full justify-center rounded-md bg-gray-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 sm:mt-0 sm:w-auto"
                 >
                   Create
                 </button>
