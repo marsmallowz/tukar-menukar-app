@@ -19,7 +19,7 @@ export default async function ListSkill({
       <h1 className="text-2xl font-bold">Find Skills</h1>
       <SearchForm />
       <h1 className="text-xl font-semibold mt-3 mb-1">List Skill </h1>
-      <div className="flex flex-col gap-3 h-[calc(100vh/3.4)]">
+      <div className="flex flex-col gap-3 h-[calc(100vh/3)] sm:h-[calc(100vh/3.4)]">
         {skills !== undefined ? (
           skills.map((skill: any) => {
             return (
