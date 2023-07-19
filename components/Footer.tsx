@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import {
   AiFillFacebook,
@@ -16,10 +17,14 @@ export default function Footer() {
         </div>
         <div>Inovasi dan kualitas yang berkelanjutan.</div>
         <div className="flex gap-4 text-3xl text-gray-200">
-          <AiFillFacebook className="cursor-pointer" />
-          <AiFillInstagram className="cursor-pointer" />
-          <AiFillLinkedin className="cursor-pointer" />
-          <AiFillGithub className="cursor-pointer" />
+          <AiFillFacebook />
+          <AiFillInstagram />
+          <Link href="https://linkedin.com/in/alsandy-maulana" target="_blank">
+            <AiFillLinkedin className="cursor-pointer" />
+          </Link>
+          <Link href="https://github.com/marsmallowz" target="_blank">
+            <AiFillGithub className="cursor-pointer" />
+          </Link>
         </div>
       </div>
       <div className="text-sm py-2">
