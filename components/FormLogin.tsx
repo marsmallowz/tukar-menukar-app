@@ -31,7 +31,7 @@ export default function FormLogin() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center gap-2 h-[90vh] max-w-md mx-auto">
+    <div className="flex flex-col justify-center items-center gap-2 h-[60vh] max-w-md mx-auto">
       <div className="text-2xl font-bold self-start text-gray-600">
         Silahkan Masuk
       </div>
