@@ -116,6 +116,15 @@ export default async function Home() {
           className="mx-auto py-4"
         />
       </div>
+
+      <div className="text-base sm:text-xl font-semibold">
+        Fitur dalam proses
+      </div>
+      <ul className="list-disc list-inside">
+        <li>Pembuatan Lupa password atau verifikasi ulang email.</li>
+        <li>Pembuatan exchange secara otomatis.</li>
+        <li>Pembuatan popular skill mingguan.</li>
+      </ul>
     </main>
   );
 }
