@@ -16,7 +16,7 @@ export async function register({
       { email, username },
       process.env.TOKEN_SECRET!,
       {
-        expiresIn: "15m",
+        expiresIn: "30d",
       }
     );
 
