@@ -48,13 +48,25 @@ export async function register({
       html: `Halo ${username},<br><br>untuk verfikasi silahkan klik ${newTabLink}.<br><br>Terima kasih!`,
     };
 
-    await transporter.sendMail(mailOptions, function (error: any, info: any) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, function (error: any, info: any) {
+        if (error) {
+          console.error(error);
+          reject(error);
+        } else {
+          console.log("Email sent: " + info.response);
+          resolve(info);
+        }
+      });
     });
+
+    // await transporter.sendMail(mailOptions, function (error: any, info: any) {
+    //   if (error) {
+    //     throw new Error(error);
+    //   } else {
+    //     console.log("Email sent: " + info.response);
+    //   }
+    // });
     return { id: user.id };
   } catch (error: any) {
     throw new Error(error.message);
