@@ -38,13 +38,13 @@ export async function register({
         pass: process.env.EMAIL_PASS,
       },
     });
-    const websiteLink = "http://localhost:3000/verify?token=" + token;
+    const websiteLink = `${process.env.WEB_URL}verify?token=${token}`;
     const newTabLink = `<a href="${websiteLink}" target="_blank">disini</a>`;
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
       // to: "alsandymaulana@gmail.com",
-      subject: "Tukar-Menukar App - Verification account ",
+      subject: "Tukar-Menukar App | Verification account ",
       html: `Halo ${username},<br><br>untuk verfikasi silahkan klik ${newTabLink}.<br><br>Terima kasih!`,
     };
 
