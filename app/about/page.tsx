@@ -1,4 +1,5 @@
 import React from "react";
+import { AiFillMail } from "react-icons/ai";
 
 export default function Page() {
   const swapSteps = [
@@ -42,7 +43,7 @@ export default function Page() {
 
   return (
     <div>
-      <div className="flex flex-col mt-6 mb-5">
+      <div className="flex flex-col  mb-5">
         <div className="text-sm sm:text-base text-gray-500">Penjelasan</div>
         <div>
           <div className="text-base sm:text-xl text-gray-900 font-semibold">
@@ -63,6 +64,16 @@ export default function Page() {
             })}
           </ul>
         </div>
+      </div>
+      <div className="text-sm sm:text-base text-gray-500">
+        Masukan dan tanggapan
+      </div>
+      <div className="text-base sm:text-xl text-gray-900 font-semibold">
+        Kontak
+      </div>
+      <div className="flex gap-2 mb-3">
+        <AiFillMail className="text-2xl" />
+        <div className="font-medium">alsandymaulana@gmail.com</div>
       </div>
     </div>
   );
