@@ -120,10 +120,13 @@ export default async function Home() {
       <div className="text-base sm:text-xl font-semibold">
         Fitur dalam proses
       </div>
-      <ul className="list-disc list-inside">
-        <li>Pembuatan Lupa password atau verifikasi ulang email.</li>
-        <li>Pembuatan exchange secara otomatis.</li>
+      <div className="text-sm sm:text-base">
+        Berikut beberapa fitur yang akan ditambahkan:
+      </div>
+      <ul className="list-disc px-10">
         <li>Pembuatan popular skill mingguan.</li>
+        <li>Pembuatan exchange secara otomatis.</li>
+        <li>Pembuatan Lupa password atau verifikasi ulang email.</li>
       </ul>
     </main>
   );
